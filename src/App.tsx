@@ -1,19 +1,21 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space, Typography } from "antd";
 import { useState } from "react";
+import { useAuth } from "./contexts/auth";
 
 function App() {
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
+  const { handleSignIn, isLogging } = useAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-
-    console.log(event.currentTarget.email.value);
-    console.log(event.currentTarget.password.value);
+    
+    handleSignIn({ login, password });
   };
 
-  const isLoginButtonDisabled = !email.trim() || !password.trim()
+  const isLoginButtonDisabled = !login.trim() || !password.trim() || isLogging
 
   return (
     <div className="h-screen flex justify-center items-center flex-col">
@@ -22,11 +24,10 @@ function App() {
       <form className="w-80" onSubmit={handleSubmit}>
         <Space direction="vertical" size="large">
           <Input
-            name="email"
-            value={email}
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            name="login"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            placeholder="Enter your login"
             className="w-full rounded-md"
           />
 
@@ -40,7 +41,12 @@ function App() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <Button datatype="submit" className="rounded-md" htmlType="submit" disabled={isLoginButtonDisabled}>
+          <Button
+            datatype="submit"
+            className="rounded-md"
+            htmlType="submit"
+            disabled={isLoginButtonDisabled}
+          >
             Log in
           </Button>
         </Space>

@@ -1,12 +1,18 @@
-import 'antd/dist/antd.css'
-import './index.css'
+import "antd/dist/antd.css";
+import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ToastContainer } from "react-toastify";
+import App from "./App";
+import { AuthContextProvider } from "./contexts/auth";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
+    <ToastContainer />
+  </React.StrictMode>,
+);
