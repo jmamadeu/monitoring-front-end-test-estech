@@ -21,6 +21,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 }) => {
   const [user, setUser] = useState({} as AuthContextProps["user"]);
   const [isLogging, setIsLogging] = useState(false);
+  // const navigate = useNavigate()
 
   const setTokenToApiInstance = (token: string) => {
     apiInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -43,6 +44,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       saveTokenToLocalStorage(token);
 
       setUser(userData);
+
+      // navigate("/map")
 
       toast("Login success", {
         type: "success",

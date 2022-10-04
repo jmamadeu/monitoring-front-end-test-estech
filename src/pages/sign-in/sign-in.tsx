@@ -1,9 +1,10 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space, Typography } from "antd";
 import { useState } from "react";
-import { useAuth } from "./contexts/auth";
+import { useAuth } from "../../contexts/auth";
 
-function App() {
+
+export const SignInScreen = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,11 +12,11 @@ function App() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-    
+
     handleSignIn({ login, password });
   };
 
-  const isLoginButtonDisabled = !login.trim() || !password.trim() || isLogging
+  const isLoginButtonDisabled = !login.trim() || !password.trim() || isLogging;
 
   return (
     <div className="h-screen flex justify-center items-center flex-col">
@@ -33,7 +34,7 @@ function App() {
 
           <Input.Password
             name="password"
-            placeholder="enter your Password"
+            placeholder="Enter your Password"
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
@@ -53,6 +54,4 @@ function App() {
       </form>
     </div>
   );
-}
-
-export default App;
+};
