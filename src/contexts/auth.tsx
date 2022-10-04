@@ -5,7 +5,7 @@ import { apiInstance } from "../services/api/api-instance";
 import { signIn } from "../services/api/auth/sign-in";
 
 type AuthContextProps = {
-  handleSignIn: (credentials: API.Auth.SignInParams) => Promise<void>;
+  handleSignIn: (credentials: API.Auth.SignInParams) => Promise<{success: boolean}>;
   user: Omit<Module.User.Type, "token">;
   isLogging: boolean;
 };
@@ -45,12 +45,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
       setUser(userData);
 
-      // navigate("/map")
-
-      toast("Login success", {
-        type: "success",
-        position: "top-right",
-      });
+      return { success: true }
     } catch (err) {
       const { response } = err as AxiosError<API.Auth.SignInErrorResponse>;
 
@@ -58,6 +53,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         type: "error",
         position: "top-right",
       });
+
+      return { success: false }
     } finally {
       setIsLogging(false);
     }

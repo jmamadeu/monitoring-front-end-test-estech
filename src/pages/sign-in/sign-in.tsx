@@ -1,19 +1,30 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space, Typography } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/auth";
-
 
 export const SignInScreen = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const { handleSignIn, isLogging } = useAuth();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
 
-    handleSignIn({ login, password });
+    const response = await handleSignIn({ login, password });
+    if (response.success) {
+      toast("Login success", {
+        type: "success",
+        position: "top-right",
+      });
+
+      navigate("/maps");
+    }
   };
 
   const isLoginButtonDisabled = !login.trim() || !password.trim() || isLogging;
